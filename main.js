@@ -4,6 +4,7 @@ const randomRouter = require("./randomFacts/random.route.js");
 const halfPassedMiddleware = require("./middlewares/halfPassed.middleware.js");
 const app = express();
 app.use(express.json());
+app.use(express.static("uploads"));
 
 app.use("/expenses", ExpensesRoute);
 app.use("/random", halfPassedMiddleware, randomRouter);

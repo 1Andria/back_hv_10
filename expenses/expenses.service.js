@@ -1,4 +1,5 @@
 const fs = require("fs/promises");
+const { deleteFromCloduinary } = require("../config/cloudinary.config");
 
 const getAllExpenses = async (req, res) => {
   const expenses = await fs.readFile("expenses.json", "utf-8");
@@ -29,6 +30,7 @@ const PostNewExpense = async (req, res) => {
     id: lastId + 1,
     content: req.body.content,
     category: req.body.category,
+    image: req.file.path,
     createdAt: new Date().toISOString(),
   };
   ParsedData.push(newExpense);
@@ -42,10 +44,13 @@ const DeleteExpenseById = async (req, res) => {
   const ParsedData = JSON.parse(expenses);
   const id = Number(req.params.id);
   const index = ParsedData.findIndex((el) => el.id === id);
+  const fileName = ParsedData[index].image.split("uploads/")[1];
+  const fileId = fileName.split(".")[0];
+  const publicFileId = `uploads/${fileId}`;
+  await deleteFromCloduinary(publicFileId);
   if (index == -1) {
     return res.status(404).json({ message: "Expense can not be deleted" });
   }
-
   ParsedData.splice(index, 1);
   await fs.writeFile("expenses.json", JSON.stringify(ParsedData));
   res.status(201).json({ message: "expense deleted successfully" });
@@ -59,12 +64,22 @@ const UpdateExpenseById = async (req, res) => {
   if (index == -1) {
     return res.status(404).json({ message: "Expense can not be deleted" });
   }
+  if (req.file) {
+    const fileName = ParsedData[index].image.split("uploads/")[1];
+    const fileId = fileName.split(".")[0];
+    const publicFileId = `uploads/${fileId}`;
+    await deleteFromCloduinary(publicFileId);
+  }
+  const updateReq = {};
+
+  if (req.body?.content) updateReq.content = req.body.content;
+  if (req.file?.path) updateReq.image = req.file.path;
   ParsedData[index] = {
     ...ParsedData[index],
-    content: req.body?.content,
+    ...updateReq,
   };
   await fs.writeFile("expenses.json", JSON.stringify(ParsedData));
-  res.status(201).json({ message: "expense updated successfully" });
+  res.status(200).json({ message: "expense updated successfully" });
 };
 
 module.exports = {
