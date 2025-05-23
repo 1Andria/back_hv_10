@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create</title>
+  </head>
+  <body>
+    <h1>Create new expense</h1>
+    <a href="/expenses">Back</a>
+    <form action="/expenses/upload" method="POST" enctype="multipart/form-data">
+      <input
+        type="text"
+        name="category"
+        placeholder="Enter category"
+        required
+      />
+
+      <input type="text" name="content" placeholder="Enter content" required />
+      <input type="file" name="image" accept="image/*" required />
+      <button type="submit">Upload</button>
+    </form>
+  </body>
+</html>

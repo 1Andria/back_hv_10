@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>update</title>
+  </head>
+  <body>
+    <a href="/expenses">back</a>
+    <form
+      action="/expenses/<%= expense.id %>/updated"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input type="text" name="content" value="<%=expense.content %>" />
+      <input type="text" name="category" value="<%=expense.category %>" />
+      <input
+        type="file"
+        name="image"
+        accept="image/*"
+        value="<%=expense.image %>"
+      />
+      <img src="<%=expense.image %>" alt="" />
+      <button>update</button>
+    </form>
+  </body>
+</html>

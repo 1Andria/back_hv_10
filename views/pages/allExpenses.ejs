@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/home.css" />
+  </head>
+  <body>
+    <h1>Home page</h1>
+    <a href="/create">Create new user</a>
+    <% ParsedData.forEach(el => {%>
+    <div class="card">
+      <h1>content:<%= el.content %></h1>
+      <h1>category:<%= el.category %></h1>
+      <img class="Image" src="<%= el.image %>" alt="" />
+      <div class="btns">
+        <a href="/expenses/<%= el.id %>/details">Details</a>
+        <a href="/expenses/<%= el.id %>/update">update</a>
+        <form action="/expenses/<%= el.id %>/delete" method="post">
+          <button>Delete</button>
+        </form>
+      </div>
+    </div>
+    <%}) %>
+  </body>
+</html>
