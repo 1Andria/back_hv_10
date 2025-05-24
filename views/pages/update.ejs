@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>update</title>
+    <link rel="stylesheet" href="/css/home.css" />
   </head>
   <body>
     <a href="/expenses">back</a>
@@ -12,6 +13,7 @@
       method="post"
       enctype="multipart/form-data"
     >
+      <h1>Update page:</h1>
       <input type="text" name="content" value="<%=expense.content %>" />
       <input type="text" name="category" value="<%=expense.category %>" />
       <input
@@ -20,7 +22,10 @@
         accept="image/*"
         value="<%=expense.image %>"
       />
-      <img src="<%=expense.image %>" alt="" />
+      <div>
+        <h1>Photo now:</h1>
+        <img class="Image" src="<%=expense.image %>" alt="" />
+      </div>
       <button>update</button>
     </form>
   </body>
